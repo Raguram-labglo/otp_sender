@@ -1,10 +1,7 @@
-from datetime import datetime
-from django.core.exceptions import ObjectDoesNotExist
-import pyotp
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .models import phoneModel
-import base64
+from rest_framework.viewsets import ModelViewSet
+from .models import user_mobile
+from .serializers import Otp_serializer, Register, User
 
-
-
+class Register(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = Register
