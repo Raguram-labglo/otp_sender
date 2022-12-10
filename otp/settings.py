@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'verification',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -124,7 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 ACCOUNT_SID='ACccd8e1c15923cf37e4dd54554b8236bf'
-AUTH_TOKEN='964791d82b0c7100cd2231736fd5ee34'
+AUTH_TOKEN='4494f655fcc78c9d496da071bb633a0a'
 COUNTRY_CODE='+91'
 TWILIO_WHATSAPP_NUMBER='whatsapp:+14155238886'
 TWILIO_PHONE_NUMBER='+12515517752'
