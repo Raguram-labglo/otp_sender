@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'verification',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,24 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 ACCOUNT_SID='ACccd8e1c15923cf37e4dd54554b8236bf'
-AUTH_TOKEN='4494f655fcc78c9d496da071bb633a0a'
+AUTH_TOKEN='49593c7f9943dd1a4a2cc70d39242ba1'
 COUNTRY_CODE='+91'
 TWILIO_WHATSAPP_NUMBER='whatsapp:+14155238886'
 TWILIO_PHONE_NUMBER='+12515517752'
+
+TWILIO_API_KEY_SID='SK9320382812b119f2520338bc15a2f3d6'
+TWILIO_API_KEY_SECRET='O4mGoNTKwU6em0LLkJqIrp6Jo6MxUe9y'
+#O4mGoNTKwU6em0LLkJqIrp6Jo6MxUe9y
+
+# sid = SK9320382812b119f2520338bc15a2f3d6
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}

@@ -11,3 +11,10 @@ class MessageHandler:
     def send_otp_via_message(self):     
         client= Client(settings.ACCOUNT_SID,settings.AUTH_TOKEN)
         message=client.messages.create(body=f'your otp is:{self.otp}',from_=f'{settings.TWILIO_PHONE_NUMBER}' ,to=f'{settings.COUNTRY_CODE}{self.phone_number}')
+class Sucessmassage:
+    phone_number=None
+    def __init__(self,phone_number):
+        self.phone_number=phone_number
+    def send_otp_via_message(self):     
+        client= Client(settings.ACCOUNT_SID,settings.AUTH_TOKEN)
+        message=client.messages.create(body=f'your profile was registered sucessfully',from_=f'{settings.TWILIO_PHONE_NUMBER}' ,to=f'{settings.COUNTRY_CODE}{self.phone_number}')
