@@ -11,4 +11,4 @@ class user_mobile(models.Model):
     recived_otp = models.IntegerField(null=True)
 
     def __str__(self):
-        return str(self.Mobile)
+        return str(self.user)
