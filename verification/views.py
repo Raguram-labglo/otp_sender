@@ -1,3 +1,4 @@
+import random
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from .models import user_mobile
@@ -9,6 +10,7 @@ from .helper import *
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
+from datetime import datetime, timedelta
 
 class Register(ModelViewSet):
     queryset = User.objects.all()
@@ -41,11 +43,33 @@ class Otp_checker(CreateAPIView):
         user.set_password(raw_password = user.password)
         user.save
         otp_owner = user_mobile.objects.get(user = user.pk)
+        """otp expiry time"""
+        if datetime.now().time()>otp_owner.otp_exp_time:
+            otp = otp_owner
+            otp.counter= 0
+            otp.save() 
+            otp_code = random.randint(1000, 9999)
+            obj = MessageHandler(str(otp_owner.Mobile), otp_code)
+            obj.send_otp_via_message()
+            delta = timedelta(minutes = 10)
+            start = datetime.now()
+            otp.counter = otp_code
+            otp.otp_send_time = start.time()
+            otp.otp_exp_time = (start+delta).time()
+            otp.save()  
+            return Response({'detail':'otp in valid'})
+
+        """check that otp alredy verified or not"""
         if otp_owner.isVerified == True:
-            print('------+++++++++++++++++++++++------------------------')
-            return Response({'details':'alredy verifide accout'}, status=status.HTTP_200_OK)
+            owner = authenticate(username = user.username, password = user.password)
+            print(owner)
+            login(self.request, user)
+            token, li = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key, 'detail':'alredy verified account'})
         given_otp = otp_owner.counter
         recived = self.request.data['recived_otp']
+        
+        """finally check otp verification"""
         if int(given_otp) == int(recived):
             otp_owner.recived_otp = recived
             otp_owner.isVerified = True
