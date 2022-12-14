@@ -62,12 +62,12 @@ class Otp_checker(CreateAPIView):
             return Response({'detail':'otp in valid'})
 
         """check that otp alredy verified or not"""
-        if otp_owner.isVerified == True:
-            owner = authenticate(username = user.username, password = user.password)
-            print(owner)
-            login(self.request, user)
-            token, li = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key, 'detail':'alredy verified account'})
+#         if otp_owner.isVerified == True:
+#             owner = authenticate(username = user.username, password = user.password)
+#             print(owner)
+#             login(self.request, user)
+#             token, li = Token.objects.get_or_create(user=user)
+#             return Response({'token': token.key, 'detail':'alredy verified account'})
         given_otp = otp_owner.counter
         recived = self.request.data['recived_otp']
 
