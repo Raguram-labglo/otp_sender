@@ -1,16 +1,18 @@
-import random
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.views import APIView
-from .models import user_mobile
-from .serializers import Otp_serializer, Register, User, Otp_verifier
-from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
 from rest_framework.authtoken.models import Token
-from .helper import *
-from rest_framework.permissions import AllowAny
-from rest_framework import status
+
 from rest_framework.generics import CreateAPIView
+from rest_framework.viewsets import ModelViewSet
+
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
 from datetime import datetime, timedelta
+import random
+
+from .models import user_mobile
+from .serializers import Register, User, Otp_verifier
+from .helper import *
 
 class Register(ModelViewSet):
     queryset = User.objects.all()
@@ -68,7 +70,7 @@ class Otp_checker(CreateAPIView):
             return Response({'token': token.key, 'detail':'alredy verified account'})
         given_otp = otp_owner.counter
         recived = self.request.data['recived_otp']
-        
+
         """finally check otp verification"""
         if int(given_otp) == int(recived):
             otp_owner.recived_otp = recived
