@@ -30,7 +30,7 @@ class Register(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        delta = timedelta(minutes = 10)
+        delta = timedelta(minutes = 3)
         start = datetime.now()
         user_mobile.objects.create(
         user = user, 
@@ -47,3 +47,8 @@ class Otp_verifier(serializers.ModelSerializer):
     class Meta:
         model = user_mobile
         fields = ['username', 'recived_otp']
+
+class Wether_for_city(serializers.Serializer):
+    city = serializers.CharField(max_length = 85)
+
+    
