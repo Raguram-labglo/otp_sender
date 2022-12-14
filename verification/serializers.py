@@ -3,7 +3,8 @@ from .models import user_mobile, User
 from .helper import *
 import random
 from django.contrib.auth import login,authenticate
-
+from datetime import datetime, timedelta
+import time 
 
 
 class Otp_serializer(serializers.ModelSerializer):
@@ -29,7 +30,16 @@ class Register(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        user_mobile.objects.create(user = user, Mobile = dict(data)['Mobile'], counter = otp_code)
+        delta = timedelta(minutes = 10)
+        start = datetime.now()
+        user_mobile.objects.create(
+        user = user, 
+        Mobile = dict(data)['Mobile'], 
+        counter = otp_code, 
+        otp_send_time = start.time(), 
+        otp_exp_time = (start+delta).time()
+        )
+        
         return user
 
 class Otp_verifier(serializers.ModelSerializer):

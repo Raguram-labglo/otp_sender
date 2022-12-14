@@ -8,6 +8,8 @@ class user_mobile(models.Model):
     Mobile = models.IntegerField(blank=False)
     isVerified = models.BooleanField(blank=False, default=False)
     counter = models.IntegerField(default=0, blank=False)
+    otp_send_time = models.TimeField(null=True)
+    otp_exp_time = models.TimeField(null = True)
     recived_otp = models.IntegerField(null=True)
 
     def __str__(self):
